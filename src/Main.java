@@ -1,31 +1,27 @@
-// Name: Andrii Malakhovtsev
-// Project: CFA Pay
-
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Main {
     public static void main(String[] args) {
-
         Scanner scnr = new Scanner(System.in);
 
-        String firstName = scnr.next(), lastName = scnr.next();
-        int pay = scnr.nextInt();
+        String inputName;
+        int age;
 
-        int[] denominations = { 10000, 5000, 1000, 500, 100, 50, 25, 10, 5 };
-        int[] denominationsCounts = new int[denominations.length];
-
-        int remainingPay = pay;
-        for (int i = 0; i < denominations.length; i++) {
-            denominationsCounts[i] = remainingPay / denominations[i];
-            remainingPay %= denominations[i];
+        inputName = scnr.next();
+        boolean exception = false;
+        while (!inputName.equals("-1")) {
+            try {
+                age = scnr.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println(inputName + " " + 0);
+                inputName = scnr.next();
+                exception = true;
+                continue;
+            }
+            if (!exception) System.out.println(inputName + " " + (age + 1));
+            exception = false;
+            inputName = scnr.next();
         }
-
-        System.out.printf("Name            Pay   10k  5k  1k 500 100  50  25  10   5%n");
-        System.out.printf("=============== ===== === === === === === === === === ===%n");
-        System.out.printf("%-15s %5d", lastName + ", " + firstName, pay);
-        for (int i = 0; i < denominations.length; i++) {
-            System.out.printf("%3d ",denominationsCounts[i]);
-        }
-
     }
 }
